@@ -279,14 +279,7 @@ button,input{font-family:inherit;outline:none}
 .za-meta-value{font-size:15px;color:var(--silver2);letter-spacing:.04em}
 .za-note{font-family:var(--font-mono);font-size:9px;letter-spacing:.16em;color:var(--silver3);margin-top:24px;line-height:1.9}
 
-/* Progress bar */
-.founding-progress{margin-top:36px}
-.progress-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.progress-label{font-family:var(--font-mono);font-size:10px;letter-spacing:.22em;color:var(--silver4)}
-.progress-count{font-family:var(--font-mono);font-size:13px;color:var(--silver);font-weight:700}
-.progress-track{height:2px;background:var(--line);position:relative;overflow:hidden}
-.progress-fill{height:100%;background:var(--silver);width:0;transition:width 1.5s cubic-bezier(.22,1,.36,1)}
-.progress-fill.go{width:var(--target-w)}
+
 
 /* ─── CINEMATIC PRODUCT ─── */
 .section-product{
@@ -693,9 +686,7 @@ footer{
       PROTOCOL M-01 — DENSITY BUILDER
     </div>
     <div class="hero-badge">
-      <span class="hero-badge-count">FOUNDING</span>
-      <span style="font-size:14px;font-weight:700;color:var(--white)">300</span>
-      <span>— 한정 선예약</span>
+      <span>FOUNDING 300 — 한정 선점</span>
     </div>
     <h1 class="hero-h1">
       <span>Time,</span>
@@ -769,15 +760,7 @@ footer{
         </tr>
       </table>
 
-      <div class="founding-progress">
-        <div class="progress-header">
-          <span class="progress-label">FOUNDING 300 예약 현황</span>
-          <span class="progress-count"><span id="progressNum">47</span> / 300</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="progressFill" style="--target-w:15.7%"></div>
-        </div>
-      </div>
+
     </div>
 
     <div class="reveal-right" data-delay="2">
@@ -946,9 +929,7 @@ footer{
           <div class="form-za-tier">TIER — FOUNDING ARCHITECT</div>
         </div>
         <div style="text-align:right">
-          <div style="font-family:var(--font-mono);font-size:7.5px;letter-spacing:.2em;color:var(--silver4);margin-bottom:6px">남은 FOUNDING 자리</div>
-          <div style="font-family:var(--font-sc);font-size:32px;color:var(--white);letter-spacing:.08em"><span id="remaining">253</span></div>
-          <div style="font-family:var(--font-mono);font-size:7px;letter-spacing:.15em;color:var(--silver4)">/ 300</div>
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;color:var(--silver3);line-height:1.8">FOUNDING 300<br>한정 발급</div>
         </div>
       </div>
 
@@ -1015,22 +996,7 @@ footer{
 const nav=document.getElementById('mainNav');
 window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
 
-/* ── HERO COUNT SLOW INCREMENT ── */
-let heroN=0;
-function tickHero(){
-  if(Math.random()<.6&&heroN<300){
-    heroN+=Math.random()<.3?2:1;
-    /* heroCount removed */;
-    const rem=300-heroN;
-    const pEl=document.getElementById('progressNum');
-    const rEl=document.getElementById('remaining');
-    if(pEl)pEl.textContent=heroN;
-    if(rEl)rEl.textContent=rem;
-    document.getElementById('progressFill').style.setProperty('--target-w',(heroN/300*100).toFixed(1)+'%');
-  }
-  setTimeout(tickHero,Math.random()*18000+12000);
-}
-setTimeout(tickHero,6000);
+/* 카운터 제거 */
 
 /* ── SCROLL REVEALS ── */
 const revObs=new IntersectionObserver(entries=>{
@@ -1038,12 +1004,7 @@ const revObs=new IntersectionObserver(entries=>{
 },{threshold:.1});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revObs.observe(el));
 
-/* ── PROGRESS BAR ANIMATE ON SCROLL ── */
-const pfObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('go');pfObs.unobserve(e.target)}});
-},{threshold:.5});
-const pf=document.getElementById('progressFill');
-if(pf)pfObs.observe(pf);
+/* progress 제거 */
 
 /* ── STAGE BOX ANIMATE ── */
 const sgObs=new IntersectionObserver(entries=>{
@@ -1115,19 +1076,17 @@ function handleSubmit(){
     return;
   }
   
-  // form-urlencoded 방식 — no-cors 환경에서 유일하게 작동
-  const formData = new FormData();
-  formData.append('name', name);
-  formData.append('phone', phone);
-
+  // text/plain + JSON — no-cors 환경에서 가장 안정적
   fetch(GAS_URL, {
     method: 'POST',
     mode: 'no-cors',
-    body: formData
+    headers: {'Content-Type': 'text/plain'},
+    body: JSON.stringify({name, phone})
   })
   .then(() => doFinish('자리가 확보되었습니다'))
   .catch(() => doFinish('자리가 확보되었습니다'));
 }
 </script>
+<iframe name="za_hidden" style="display:none;width:0;height:0;border:none"></iframe>
 </body>
 </html>
