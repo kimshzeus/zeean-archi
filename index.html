@@ -311,7 +311,7 @@ button,input{font-family:inherit;outline:none}
   gap:3px;
   max-width:100%;
 }
-.pcard{position:relative;overflow:hidden;background:var(--navy2)}
+.pcard{position:relative;overflow:hidden;background:var(--navy2);min-height:160px}
 .pcard img{
   width:100%;height:100%;object-fit:cover;
   transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .5s ease;
@@ -579,6 +579,88 @@ footer{
 }
 .hero-launch::before{
   content:'';width:20px;height:1px;background:var(--silver3);
+}
+
+/* ── FOLD FRONT SCREEN (≤ 480px) ── */
+@media(max-width:480px){
+  .nav{padding:14px 16px}
+  .nav-logo{font-size:11px;letter-spacing:.22em}
+  .nav-cta{font-size:9px;padding:7px 12px;letter-spacing:.12em}
+
+  .hero-content{padding:90px 20px 60px}
+  .hero-h1{font-size:clamp(40px,11vw,56px)}
+  .hero-sub{font-size:14px}
+  .hero-body{font-size:14px;line-height:1.75}
+  .hero-launch{font-size:9px}
+  .btn-primary{font-size:10px;padding:14px 22px;letter-spacing:.14em;white-space:nowrap}
+  .btn-ghost{font-size:10px}
+  .hero-scroll-hint{display:none}
+
+  /* ticker */
+  .ticker{padding:12px 16px}
+  .ticker-item{font-size:9px;gap:8px}
+
+  /* founding */
+  .section-founding,.section-product,.section-identity,.section-logboard,.section-form{
+    padding:60px 20px
+  }
+  .section-label{font-size:9px;margin-bottom:36px}
+  .founding-h2{font-size:clamp(28px,8vw,40px)}
+  .founding-body{font-size:14px;line-height:1.75}
+  .tier-name{font-size:9px;width:80px}
+  .tier-range{font-size:13px}
+  .tier-count{font-size:10px}
+  .za-card{padding:28px 20px}
+  .za-number-display{font-size:clamp(26px,7vw,36px)}
+  .za-meta-grid{grid-template-columns:1fr}
+  .za-meta-value{font-size:13px}
+  .progress-label{font-size:9px}
+
+  /* product cinema */
+  .product-cinema{
+    grid-template-columns:1fr;
+    grid-template-rows:auto
+  }
+  .pcard-big{grid-column:auto;min-height:220px}
+  .pcard{min-height:180px}
+  .product-header{padding:60px 20px 36px}
+  .product-price-tag{font-size:20px}
+
+  /* identity */
+  .identity-text h2{font-size:clamp(28px,8vw,38px)}
+  .identity-text p{font-size:13px}
+  .feature-text{font-size:13px}
+  .card-flip{height:220px}
+
+  /* logboard */
+  .logboard-text h2,.section-h2{font-size:clamp(28px,8vw,38px)}
+  .phase-label{font-size:9px;width:72px}
+  .phase-desc{font-size:13px}
+
+  /* form */
+  .form-header h2{font-size:clamp(28px,8vw,38px)}
+  .form-header p{font-size:13px}
+  .form-za-live{padding:20px 16px}
+  .form-za-live-num{font-size:clamp(16px,5vw,22px)}
+  .field-input{font-size:15px;padding:12px 14px}
+  .field-label{font-size:9px}
+  .form-submit{font-size:12px;padding:18px 20px;letter-spacing:.14em}
+  .form-note{font-size:10px;line-height:1.9;word-break:keep-all}
+  .consent-text{font-size:12px;word-break:keep-all}
+
+  /* footer */
+  footer{padding:28px 20px}
+  .footer-brand{font-size:12px}
+  .footer-tagline{font-size:12px}
+}
+
+/* ── 텍스트 줄바꿈 자연스럽게 (전체) ── */
+.hero-body,.founding-body,.founding-highlight,
+.identity-text p,.logboard-text p,
+.form-header p,.reservation-notice,
+.consent-text,.form-note{
+  word-break:keep-all;
+  overflow-wrap:break-word;
 }
 </style>
 </head>
@@ -886,7 +968,7 @@ footer{
       </div>
 
       <button class="form-submit reveal" data-delay="4" id="submitBtn" onclick="handleSubmit()">
-        FOUNDING 번호 선점하기
+        번호 선점하기
         <span class="btn-arrow" style="background:var(--navy)"></span>
       </button>
       <p class="form-note">
