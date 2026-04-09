@@ -993,7 +993,7 @@ footer{
 <script>
 /* NAV */
 const nav=document.getElementById('mainNav');
-window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
 
 /* STAGE */
 const sgObs=new IntersectionObserver(function(entries){
@@ -1004,13 +1004,13 @@ const sgObs=new IntersectionObserver(function(entries){
       sgObs.unobserve(e.target);
     }
   });
-},{threshold:.3});
+},{threshold:0.3});
 const sg=document.getElementById('stagesGrid');
 if(sg)sgObs.observe(sg);
 
-/* PHONE FORMAT — 하이픈 자동 */
+/* PHONE FORMAT */
 document.getElementById('inputPhone').addEventListener('input',function(){
-  let v=this.value.replace(/\D/g,'').slice(0,11);
+  let v=this.value.replace(/[^0-9]/g,'').slice(0,11);
   if(v.length>7)      v=v.slice(0,3)+'-'+v.slice(3,7)+'-'+v.slice(7);
   else if(v.length>3) v=v.slice(0,3)+'-'+v.slice(3);
   this.value=v;
@@ -1023,7 +1023,7 @@ function handleSubmit(){
   const consent = document.getElementById('consentCheck').checked;
 
   if(!name){alert('이름을 입력해 주세요.');return;}
-  if(!phone||phone.replace(/\D/g,'').length<10){alert('연락처를 올바르게 입력해 주세요.');return;}
+  if(phone.replace(/[^0-9]/g,'').length<10){alert('연락처를 올바르게 입력해 주세요.');return;}
   if(!consent){alert('개인정보 수집에 동의해 주세요.');return;}
 
   const btn=document.getElementById('submitBtn');
