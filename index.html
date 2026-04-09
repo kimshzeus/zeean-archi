@@ -28,7 +28,7 @@
   --font-sc:    'Cormorant SC', Georgia, serif;
   --font-mono:  'Space Mono', 'Courier New', monospace;
 }
-html{scroll-behavior:smooth;background:var(--navy)}
+html{scroll-behavior:smooth;background:var(--navy);overflow-x:hidden}
 body{background:var(--navy);color:var(--silver);font-family:var(--font-serif);overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -41,7 +41,7 @@ button,input{font-family:inherit;outline:none}
 
 /* ─── BLUEPRINT GRID ─── */
 .bp-grid{
-  position:fixed;inset:0;pointer-events:none;z-index:0;
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
   background-image:
     linear-gradient(var(--line) 1px,transparent 1px),
     linear-gradient(90deg,var(--line) 1px,transparent 1px);
@@ -192,6 +192,7 @@ button,input{font-family:inherit;outline:none}
   position:relative;z-index:10;background:var(--navy2);
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:20px 48px;display:flex;align-items:center;gap:0;overflow:hidden;
+  max-width:100vw;
 }
 .ticker::before{content:'';position:absolute;left:0;top:0;bottom:0;width:120px;background:linear-gradient(90deg,var(--navy2),transparent);z-index:2}
 .ticker::after{content:'';position:absolute;right:0;top:0;bottom:0;width:120px;background:linear-gradient(-90deg,var(--navy2),transparent);z-index:2}
@@ -211,7 +212,7 @@ button,input{font-family:inherit;outline:none}
 .section-founding{
   position:relative;z-index:10;padding:120px 80px;
   background:linear-gradient(to bottom,var(--navy) 0%,var(--navy1) 100%);
-  overflow:hidden;
+  overflow:hidden;max-width:100vw;
 }
 .section-founding::before{
   content:'FOUNDING';position:absolute;
@@ -551,13 +552,16 @@ footer{
 
 /* ─── MOBILE ─── */
 @media(max-width:900px){
-  .nav{padding:16px 24px}
+  .nav{padding:16px 24px;overflow:hidden}
   .nav-right .nav-tag{display:none}
+  .nav-right{gap:12px}
   .hero-content{padding:110px 28px 70px;max-width:100%}
-  .hero-image-side{width:100%;height:50vh;top:auto;bottom:0;
-    position:absolute}
-  .hero-image-side::before{background:linear-gradient(180deg,var(--navy) 0%,rgba(9,13,26,.5) 100%)}
-  .hero{min-height:100svh;flex-direction:column}
+  .hero-image-side{
+    width:100%;height:45vh;top:auto;bottom:0;
+    position:absolute;left:0;right:0;overflow:hidden;
+  }
+  .hero-image-side::before{background:linear-gradient(180deg,var(--navy) 0%,rgba(9,13,26,.6) 100%)}
+  .hero{min-height:100svh;flex-direction:column;overflow:hidden}
   .hero-scroll-hint{left:28px}
   .ticker{padding:16px 24px}
   .section-founding,.section-product,.section-identity,.section-logboard,.section-form{padding:80px 24px}
