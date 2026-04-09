@@ -1043,14 +1043,27 @@ function handleSubmit(){
   if(!phone||phone.replace(/\D/g,'').length<10){alert('연락처를 올바르게 입력해 주세요.');return;}
   if(!consent){alert('개인정보 수집에 동의해 주세요.');return;}
   
-  const seed=Array.from(name).reduce((s,c)=>s+c.charCodeAt(0),0);
-  const assigned=48+((seed*7+heroN)%253);
-  const zaStr='ZA — 000'+('000'+assigned).slice(-3);
+  const GAS_URL='https://script.google.com/macros/s/AKfycbw-66gb6i03bE0DGs12vo1Zf2PC7MIqVVTi-nzFOf2DWK2QWgDhhwSAi6G0B5fwHyq-Zw/exec';
   
-  document.getElementById('formWrap').style.display='none';
-  document.getElementById('successNum').textContent=zaStr;
-  document.getElementById('successState').classList.add('show');
-  document.getElementById('reservation').scrollIntoView({behavior:'smooth',block:'start'});
+  const form=document.createElement('form');
+  form.method='POST';
+  form.action=GAS_URL;
+  form.target='za_hidden';
+  [['name',name],['phone',phone]].forEach(([k,v])=>{
+    const inp=document.createElement('input');
+    inp.type='hidden';inp.name=k;inp.value=v;
+    form.appendChild(inp);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+
+  setTimeout(()=>{
+    document.getElementById('formWrap').style.display='none';
+    document.getElementById('successNum').textContent='자리가 확보되었습니다';
+    document.getElementById('successState').classList.add('show');
+    document.getElementById('reservation').scrollIntoView({behavior:'smooth',block:'start'});
+  },800);
   
   /* ── Google Apps Script 연동 ──
      아래 URL을 본인 Apps Script 웹앱 URL로 교체하세요
